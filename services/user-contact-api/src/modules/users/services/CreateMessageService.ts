@@ -1,8 +1,5 @@
-import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
-import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
-import User from '../infra/typeorm/entities/User';
 import IMessagesRepository from "@modules/users/repositories/IMessagesRepository";
 import Message from "@modules/users/infra/typeorm/entities/Message";
 

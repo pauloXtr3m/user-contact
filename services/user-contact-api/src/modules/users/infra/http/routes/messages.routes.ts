@@ -1,6 +1,5 @@
 import { Router } from 'express';
 
-import UsersController from '@modules/users/infra/http/controllers/UsersController';
 import { celebrate, Joi, Segments } from 'celebrate';
 import MessagesController from "@modules/users/infra/http/controllers/MessagesController";
 
@@ -19,6 +18,16 @@ messagesRouter.post(
     },
   }),
   async (request, response) => messagesController.create(request, response),
+);
+
+messagesRouter.post(
+  '/search',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+    },
+  }),
+  async (request, response) => messagesController.search(request, response),
 );
 
 export default messagesRouter;

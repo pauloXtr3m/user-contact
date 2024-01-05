@@ -32,7 +32,7 @@ const contactSchema = z.object({
   }),
   content: z.string({required_error: 'Mensagem é obrigatória'})
 })
-export default function Home() {
+export default function Contact() {
   const form = useForm<Message>({ resolver: zodResolver(contactSchema)});
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -111,6 +111,9 @@ export default function Home() {
                 </FormItem>
               )}
             />
+            <Button className="mr-8" disabled={loading} onClick={() => router.replace('/')} variant="secondary">
+              Voltar
+            </Button>
             <Button type="submit" disabled={loading}>
               {loading && <><Icons.spinner className="h-4 w-4 animate-spin" /> Carregando</>}
               {!loading && 'Enviar'}
