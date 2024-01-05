@@ -1,0 +1,74 @@
+version: '3'
+
+networks:
+  main:
+    driver: bridge
+services:
+  redis_db:
+    container_name: redis_users_contact
+    image: 'redis'
+    ports:
+      - "6379:6379"
+    networks:
+      - main
+  database:
+    container_name: postgres_users_contact
+    image: "postgres:15.5-alpine"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: user_contact_local
+      PGDATA: /data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - main
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    container_name: api
+    ports:
+      - "3333:3333"
+    build:
+      context: "./services/user-contact-api"
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_DATABASE: user_contact_local
+      POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+      REDIS_HOST: redis_db
+      REDIS_PORT: 6379
+    networks:
+      - main
+    depends_on:
+      database:
+        condition: service_healthy
+    links:
+      - "database:user-contact.db"
+  web:
+    container_name: web
+    build:
+      context: "./apps/user-contact-web"
+      dockerfile: Dockerfile
+      args:
+        API_URL: api
+    ports:
+      - "3000:3000"
+    networks:
+      - main
+    depends_on:
+      - api
+    links:
+      - "api:user-contact.api"
+    logging:
+      options:
+        max-size: '50m'
+
+

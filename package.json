@@ -2,5 +2,9 @@
   "name": "@user-contact/root",
   "version": "1.0.0",
   "private": true,
-  "workspaces": ["apps/*", "services/*"]
+  "scripts": {
+    "start:web": "cd ./apps/user-contact-web && yarn dev",
+    "start:app": "cd ./apps/user-contact-app && yarn start",
+    "start:api": "cd ./services/user-contact-api && yarn dev:server"
+  }
 }

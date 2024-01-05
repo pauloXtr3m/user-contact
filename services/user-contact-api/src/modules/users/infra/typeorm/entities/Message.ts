@@ -3,9 +3,8 @@ import {
   Column,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  CreateDateColumn, ManyToOne,
+  CreateDateColumn,
 } from 'typeorm';
-import User from "@modules/users/infra/typeorm/entities/User";
 
 @Entity('messages')
 class Message {
