@@ -1,20 +1,20 @@
 # User contact API
-API to manage user contacts
+API gerenciar mensagens de usuários
 
 ## Setup
 
-### Download dependencies
+### Instalar dependências
 
 ```yarn install```
 
-### Environment variables
+### Variáveis de ambiente
 
-Set your `.env` file based in `.env.example`
+Configure o arquivo `.env` baseado no `.env.example`
 
-### Create docker container to run postgres
+### Crie um container docker com o postgres
 
 ```  docker run --name user-contact-local -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres```
-### Create database
+### Crie o banco de dados
 
 ```bash
   docker exec -it user-contact-local bash
@@ -22,15 +22,15 @@ Set your `.env` file based in `.env.example`
   CREATE DATABASE user_contact_local;
 ```
 
-### Run migrations
+### Rodar migrations
 
 ```yarn typeorm migrations:run```
 
-### Create redis container
+### Crie um container redis
 This project uses Redis with rate limiter to avoid ddos attacks
 
 ```docker run --name redis -p 6379:6379 -d -t redis```
 
-## Start
+## Iniciar
 
 ```yarn dev:server```
